@@ -1,0 +1,10 @@
+/* Day Sheet print: venue research and the user-sourced check register. Builds
+   on the shared .print-sheet rules in globals.css. */
+@media print {
+  .print-sheet .day-research-market { margin-bottom: 6pt; }
+  .print-sheet .day-research-market p { margin-bottom: 3pt; break-inside: avoid; }
+  .print-sheet .day-research-checks { color: #374151; }
+  .print-sheet .day-check-register p { font-size: 7pt; line-height: 1.3; margin: 0 0 2pt; overflow-wrap: anywhere; break-inside: avoid; }
+  .print-sheet .day-check-register a { color: inherit; text-decoration: underline; }
+  .print-sheet td small { font-size: 6.5pt; color: var(--ink-muted); }
+}

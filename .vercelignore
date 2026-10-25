@@ -1,0 +1,8 @@
+.env*
+.git
+.next
+node_modules
+*.log
+*.tsbuildinfo
+scripts
+AGENTS.md

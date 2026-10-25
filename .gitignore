@@ -1,0 +1,22 @@
+.DS_Store
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.log
+*.tsbuildinfo
+.vercel/
+
+# Secrets
+.env*
+!.env.example
+
+# Qloo API responses must not be published (Qloo hackathon developer guide).
+# Cached responses live only in the private server-side store.
+.cache/
+qloo-cache/
+*.qloo.json
+
+# Local agent context is not product source.
+AGENTS.md
