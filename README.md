@@ -30,7 +30,7 @@ Wikidata evidence has its own provider label, timestamp and source links. It is 
 Venue and nearby-partner discovery never offers places Qloo tags as adult-entertainment clubs; when Qloo returns one, the market's operating notes record that it was withheld. User-sourced checks must cite a public web address: local-network hosts, IP addresses and credentials are rejected.
 
 The model writes four bounded content blocks: activity, support request, prospective value and next step. The application composes the factual introduction, title and email from those blocks and verified fact references; it does not invent a sender identity. The full composed document still passes reference checks and a separate factual/readiness review. Requests and explicitly proposed activities are distinguished from claims of existing bookings, resources or sponsor commitments.
-Recipient proposal printing uses a portrait A4 layout with readable prose sizing and does not repeat the email draft. The email remains available in its own tab and text export; the separate evidence appendix preserves all generated copy, citations and limitations. The itinerary retains its landscape layout. Printed documents carry a TourPulse masthead, a not-a-booking status label and page footers. The Day Sheet opens with summary figures, a straight-line route sketch from verified city coordinates, a day strip of show, travel and rest days with estimated drive hours against the daily cap, and one card per market (Qloo market rank, City Fit, working venue, judgments and current checks). The same route sketch and day strip appear above the on-screen itinerary, and candidate cards show 0–1 signals as labeled bars with their values.
+Recipient proposal printing uses portrait A4 and does not repeat the email draft. The email remains available in its own tab and text export; the separate evidence appendix preserves all generated copy, citations and limitations. The Day Sheet retains landscape A4, a TourPulse masthead, a not-a-booking label and page footers. It opens with inline route metrics, a straight-line route sketch from verified coordinates, and a daily-drive bar chart against the user's cap, followed by one card per market and the itinerary. The screen's Overview tab uses the same metrics and chart components; Day sheet and Map and neighborhoods are separate working views. Candidate cards show 0–1 signals as labeled bars with their values.
 The Day Sheet includes current venue judgments, source-linked operating notes, their check dates and date applicability, and explicit missing/reconfirmation states. The evidence appendix groups identical facts and references email paragraphs only when their text is exactly identical; it retains all fact IDs, source parameters and original timestamps. A returned but unselected venue is distinguished from a market with no venue candidates.
 
 ### Judgments are not scores
@@ -77,9 +77,21 @@ npm run warm:samples -- --start-date=2026-11-05 --mode=all
 
 This resolves canonical entities and generates genuine Qloo plans for all three modes in private shared Redis. It consumes real API quota. Shared examples expire after seven days. Loading an example copies it into a new owned run and preserves source timestamps. Illustrative selections remain unconfirmed and editable. If no shared sample exists, the UI loads verified preset inputs rather than fabricating a completed tour.
 
-`vercel.json` schedules the authenticated `/api/cron/warm` route daily at 02:17 UTC. Vercel Hobby execution may occur within that hour rather than at the exact minute. Set `CRON_SECRET` in the deployment environment; unauthorized requests receive 401. The route warms all three modes with a start date seven days ahead, uses public shared execution capacity rather than reserved judging slots, and stops automatic provider work after November 17, 2026 at 04:45 UTC. Local authenticated execution completed all three modes; the deployed schedule still requires verification. No model-generated sponsor proposal is included in maintenance.
+`vercel.json` schedules the authenticated `/api/cron/warm` route daily at 02:17 UTC. Vercel Hobby execution may occur within that hour rather than at the exact minute. Set `CRON_SECRET` in the deployment environment; unauthorized requests receive 401. The route warms all three modes with a start date seven days ahead, uses public shared execution capacity rather than reserved judging slots, and stops automatic provider work after November 6, 2026 at 04:45 UTC. Local authenticated execution completed all three modes; the deployed schedule still requires verification. No model-generated sponsor proposal is included in maintenance.
 
 ## Architecture and boundaries
+
+```mermaid
+flowchart LR
+  Browser["Browser: research, preview, explicit Apply"] --> API["Next.js: validated, owner-bound APIs"]
+  API --> Redis["Private Redis: evidence cache, admission, revisioned runs"]
+  API --> Qloo["Qloo: identities and cross-domain discovery"]
+  API --> Hive["Hive: constrained planning tools and draft review"]
+  API --> Wikidata["Wikidata: Qloo-linked P570 checks only"]
+  Browser --> Map["OpenFreeMap: tiles and style"]
+  Browser --> Export["Day Sheet, recipient proposal, evidence appendix"]
+```
+
 
 - **Browser:** React console, accessible Radix dialogs/tabs, MapLibre vector map and equivalent stop/neighborhood lists. OpenFreeMap tiles are requested directly by the browser with visible OpenFreeMap, OpenMapTiles and OpenStreetMap attribution. Tile data are not proxied or collected into the Qloo cache.
 - **Next.js server:** validated search, preset, sample, planning, action, preview, proposal and run lifecycle routes. Qloo and Hive hosts are fixed server-side; redirects are rejected.

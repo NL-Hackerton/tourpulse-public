@@ -14,7 +14,7 @@
   --warning: #fbbf24;
   --text: #f9fafb;
   --muted: #9ca3af;
-  --faint: #6b7280;
+  --faint: #7c8595;
   --surface-input: #030712;
   --border-strong: #374151;
   --danger: #f87171;
@@ -172,7 +172,7 @@ code { font: var(--fs-xs)/1.6 "JetBrains Mono", monospace; overflow-wrap: anywhe
 .route-metrics > div { min-width: 0; }
 .route-metrics dt { color: var(--faint); font-size: var(--fs-base); line-height: 20px; }
 .route-metrics dd { display: flex; align-items: center; gap: 8px; margin: 6px 0 0; font-size: var(--fs-lg); font-weight: 600; line-height: 28px; white-space: nowrap; }
-.route-metric-qualifier { color: #4b5563; font-weight: 600; }
+.route-metric-qualifier { color: var(--muted); font-weight: 600; }
 .route-metric-qualifier::before { content: "– "; }
 .level-marker { display: inline-flex; gap: 2px; }
 .level-marker i { width: 4px; height: 16px; border-radius: 2px; background: #374151; }

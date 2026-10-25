@@ -18,7 +18,7 @@
    remapped here as well. */
 @media print {
   .print-sheet {
-    --ink: #111827; --ink-muted: #6b7280; --ink-faint: #9ca3af; --rule: #e5e7eb; --rule-strong: #d1d5db; --tint: #f9fafb;
+    --ink: #111827; --ink-muted: #6b7280; --ink-faint: #6b7280; --rule: #e5e7eb; --rule-strong: #d1d5db; --tint: #f9fafb;
     --brand: #3b82f6; --brand-ink: #1d4ed8; --brand-tint: #eff6ff; --brand-line: #bfdbfe;
     --ok: #059669; --hold: #d97706; --out: #dc2626;
     --accent: var(--brand); --text: var(--ink); --muted: var(--ink-muted); --faint: var(--ink-muted); --border: var(--rule); --border-strong: var(--rule-strong); --elevated: var(--tint); --success: var(--ok);
