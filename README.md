@@ -4,7 +4,7 @@ Build a tour-research shortlist you can explain: discover audience-led markets a
 
 **Live application:** https://tourpulse-six.vercel.app
 
-**Release status:** the production candidate is live for submission preparation. Anonymous HTTP access was verified on October 25, 2026. Contest submission and final independent review are separate from deployment; this is not a submission receipt.
+**Submission:** [TourPulse on Devpost](https://devpost.com/software/tourpulse), submitted to the Qloo Agentic Hackathon on October 25, 2026. [Download the 2:22 product walkthrough](https://github.com/NL-Hackerton/tourpulse-public/releases/download/submission-2026-10-25/tourpulse-demo.mp4). The hosted app is the primary demonstration; the video is edited, sampled footage of real browser sessions.
 
 **Source:** https://github.com/NL-Hackerton/tourpulse-public — an audited snapshot with non-identifying commit metadata. Private development history, credentials, raw provider responses and operator evidence are not included.
 
