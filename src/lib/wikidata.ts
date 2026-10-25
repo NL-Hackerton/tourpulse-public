@@ -51,7 +51,9 @@ export async function lookupWikidataLife(rawIds: readonly string[], signal?: Abo
   const ids = idsSchema.parse([...new Set(rawIds)].sort());
   signal = AbortSignal.any([AbortSignal.timeout(45000), ...(signal ? [signal] : [])]);
   const endpoint = "https://www.wikidata.org/w/api.php";
-  const params = { action: "wbgetentities", ids: ids.join("|"), props: "claims", format: "json", maxlag: "5" };
+  // No maxlag: it is a write-side politeness parameter and makes this read fail whenever the serving Wikimedia
+  // datacenter reports replica lag, which production egress observed persistently. The reply is still validated.
+  const params = { action: "wbgetentities", ids: ids.join("|"), props: "claims", format: "json" };
   const url = new URL(endpoint);
   for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
   const key = cacheKey(createHash("sha256").update(url.href).digest("hex"), "wikidata");
@@ -80,7 +82,7 @@ export async function lookupWikidataLife(rawIds: readonly string[], signal?: Abo
     }, 15000);
     if (!response.ok || !response.body || Number(response.headers.get("content-length")) > 8_000_000) {
       await response.body?.cancel();
-      throw new Error("Wikidata unavailable or oversized");
+      throw new Error(`Wikidata unavailable or oversized (HTTP ${response.status})`);
     }
     const reader = response.body.getReader(), decoder = new TextDecoder();
     let text = "", bytes = 0;
@@ -98,6 +100,8 @@ export async function lookupWikidataLife(rawIds: readonly string[], signal?: Abo
     await publishCache(key, token, { url: url.href, fetchedAt, records }, signal);
     return { records, evidence: evidence(fetchedAt, false) };
   } catch (error) {
+    // Operator diagnostics only: the user-facing message stays generic.
+    console.error("wikidata lookup failed:", error instanceof Error ? error.message : "unknown error");
     signal.throwIfAborted();
     if (error instanceof ServiceError) throw error;
     throw new ServiceError("Linked biographical checks are unavailable. No unchecked replacement result was saved. Try again shortly.");
